@@ -83,3 +83,18 @@ function typeText(element, text, speed = 30) {
     }
   }, speed);
 }
+
+// Puzzle unlock logic (for teen milestone only)
+document.querySelectorAll(".unlock").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const puzzle = btn.closest(".puzzle");
+    const answer = puzzle.querySelector(".answer").value.toLowerCase();
+
+    if (answer.includes("you")) {
+      current++;
+      showMilestone(current);
+    } else {
+      puzzle.querySelector(".hint").classList.remove("hidden");
+    }
+  });
+});
