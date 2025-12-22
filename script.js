@@ -62,12 +62,6 @@ document.querySelectorAll(".next-section").forEach((btn, i) => {
   
 });
 
-// 🔹 Fire confetti on landing page immediately
-window.addEventListener("DOMContentLoaded", () => {
-  if (typeof window.launchConfetti === "function") {
-    window.launchConfetti();
-  }
-});
 
 
 function typeText(element, text, speed = 30) {
@@ -84,15 +78,37 @@ function typeText(element, text, speed = 30) {
   }, speed);
 }
 
-// Puzzle unlock logic (for teen milestone only)
 document.querySelectorAll(".unlock").forEach(btn => {
   btn.addEventListener("click", () => {
     const puzzle = btn.closest(".puzzle");
-    const answer = puzzle.querySelector(".answer").value.toLowerCase();
+    const answers = puzzle.dataset.answer
+      .toLowerCase()
+      .split(",")
+      .map(a => a.trim());
 
-    if (answer.includes("you")) {
-      current++;
-      showMilestone(current);
+    const userAnswer = puzzle.querySelector(".answer").value.toLowerCase();
+
+    const isCorrect = answers.some(ans => userAnswer.includes(ans));
+
+    if (isCorrect) {
+
+      // 🎉 small confetti burst on correct answer
+      if (typeof confetti === "function") {
+        confetti({ particleCount: 80, spread: 70 });
+      }
+
+      // Landing page
+      if (puzzle.closest("#countdown-screen")) {
+        countdownScreen.classList.add("hidden");
+        milestones.classList.remove("hidden");
+        showMilestone(0);
+      }
+      // Milestones
+      else {
+        current++;
+        showMilestone(current);
+      }
+
     } else {
       puzzle.querySelector(".hint").classList.remove("hidden");
     }

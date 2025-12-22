@@ -1,5 +1,5 @@
-// confetti.js
-function launchConfetti() {
+// Make confetti function globally accessible
+window.launchConfetti = function() {
   const duration = 5000; // 5 seconds
   const animationEnd = Date.now() + duration;
   const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999 };
@@ -16,4 +16,7 @@ function launchConfetti() {
       origin: { x: Math.random(), y: Math.random() - 0.2 }
     }));
   }, 250);
-}
+};
+
+// 🔥 Fire on landing page automatically
+window.addEventListener("load", launchConfetti);
