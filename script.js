@@ -47,6 +47,56 @@ function showMilestone(index) {
   current = index;
 }
 
+// Puzzle Button Logic
+document.querySelectorAll(".unlock").forEach((btn) => {  // Changed to class
+  btn.addEventListener("click", () => {
+    const puzzle = btn.closest(".milestone");
+    const answersAttr = puzzle.dataset.answer || "";
+    const answers = answersAttr
+      .toLowerCase()
+      .split(",")
+      .map(a => a.trim());  // Allow multiple answers, trimmed
+
+    const userAnswerInput = puzzle.querySelector(".answer");
+    const userAnswer = userAnswerInput ? userAnswerInput.value.toLowerCase().trim() : "";
+
+    console.log(`Checking answer: ${userAnswer}`);  // Debugging
+
+    // Exit if no answer entered
+    if (userAnswer === "") {
+      console.log("No answer entered");  // Debugging
+      const hint = puzzle.querySelector(".hint");
+      if (hint) hint.classList.remove("hidden");
+      return;
+    }
+
+    // Check if the answer is correct
+    const isCorrect = answers.some(ans => userAnswer === ans);
+
+    if (isCorrect) {
+      console.log("Correct answer");  // Debugging
+      if (typeof confetti === "function") {
+        confetti({ particleCount: 80, spread: 70 });
+      }
+
+      btn.disabled = true; // Disable button after correct answer
+
+      // Move to the next milestone if available
+      if (current + 1 < milestoneSections.length) {
+        showMilestone(current + 1);
+      } else {
+        milestones.classList.add("hidden");
+        document.getElementById("main-content").classList.remove("hidden");
+      }
+    } else {
+      console.log("Incorrect answer");  // Debugging
+      // Show hint if answer is wrong
+      const hint = puzzle.querySelector(".hint");
+      if (hint) hint.classList.remove("hidden");
+    }
+  });
+});
+
 // Next Button Logic for Milestones
 document.querySelectorAll(".nextBtn").forEach((btn) => {  // Changed to class
   btn.addEventListener("click", () => {
