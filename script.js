@@ -5,7 +5,7 @@ const countdownScreen = document.getElementById("countdown-screen");
 const milestones = document.getElementById("milestones");
 
 // Countdown timer
-const targetDate = new Date(Date.now() + 5000).getTime();
+const targetDate = new Date(Date.now() + 5000).getTime();  // 5 seconds for testing
 const timer = setInterval(() => {
   const now = new Date().getTime();
   const distance = targetDate - now;
@@ -29,7 +29,7 @@ const timer = setInterval(() => {
 nextBtn.addEventListener("click", () => {
   countdownScreen.classList.add("hidden");
   milestones.classList.remove("hidden");
-  showMilestone(0);
+  showMilestone(0);  // Show first milestone
 });
 
 // ====== MILESTONES LOGIC ======
@@ -37,6 +37,7 @@ const milestoneSections = document.querySelectorAll(".milestone");
 let current = 0;
 
 function showMilestone(index) {
+  // Hide all milestones and then display the correct one
   milestoneSections.forEach((section) => {
     section.classList.add("hidden");
     section.style.opacity = 0;
@@ -45,7 +46,7 @@ function showMilestone(index) {
   const section = milestoneSections[index];
   section.classList.remove("hidden");
   section.style.opacity = 1;
-  current = index; // always keep current in sync
+  current = index;  // Sync the current milestone
 }
 
 // ====== PUZZLE BUTTONS ======
@@ -56,18 +57,19 @@ document.querySelectorAll(".unlock").forEach((btn) => {
     const answers = answersAttr
       .toLowerCase()
       .split(",")
-      .map(a => a.trim());
+      .map(a => a.trim());  // Allow multiple answers, trimmed
 
     const userAnswerInput = puzzle.querySelector(".answer");
     const userAnswer = userAnswerInput ? userAnswerInput.value.toLowerCase().trim() : "";
 
-    // Don't proceed if the answer is empty
+    // Check if the user entered something
     if (userAnswer === "") {
       const hint = puzzle.querySelector(".hint");
       if (hint) hint.classList.remove("hidden");
-      return;
+      return;  // Exit if no answer
     }
 
+    // Check if the answer is correct
     const isCorrect = answers.some(ans => userAnswer === ans);
 
     if (isCorrect) {
@@ -75,17 +77,19 @@ document.querySelectorAll(".unlock").forEach((btn) => {
         confetti({ particleCount: 80, spread: 70 });
       }
 
-      // Disable the button to avoid multiple clicks
+      // Disable the button to avoid multiple submissions
       btn.disabled = true;
 
-      // Move to the next milestone or show final content
+      // Move to the next milestone
       if (current + 1 < milestoneSections.length) {
         showMilestone(current + 1);
       } else {
+        // Show final content if no more milestones
         milestones.classList.add("hidden");
         document.getElementById("main-content").classList.remove("hidden");
       }
     } else {
+      // Show hint if answer is wrong
       const hint = puzzle.querySelector(".hint");
       if (hint) hint.classList.remove("hidden");
     }
