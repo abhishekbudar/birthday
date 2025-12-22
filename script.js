@@ -103,26 +103,25 @@ document.querySelectorAll(".next-section").forEach((btn) => {
   });
 });
 
-function launchBalloons(count = 10) {
-  for (let i = 0; i < count; i++) {
-    const balloon = document.createElement("div");
-    balloon.classList.add("balloon");
+// // ====== CONFETTI ======
+// window.launchConfetti = function() {
+//   const duration = 5000;
+//   const animationEnd = Date.now() + duration;
+//   const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999 };
 
-    // Random horizontal position
-    balloon.style.left = Math.random() * 90 + "vw";
+//   const interval = setInterval(function() {
+//     const timeLeft = animationEnd - Date.now();
+//     if (timeLeft <= 0) {
+//       clearInterval(interval);
+//       return;
+//     }
 
-    // Random color
-    const colors = ["red", "blue", "yellow", "green", "pink", "orange", "purple"];
-    balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+//     confetti(Object.assign({}, defaults, {
+//       particleCount: 5 + Math.random() * 5,
+//       origin: { x: Math.random(), y: Math.random() - 0.2 }
+//     }));
+//   }, 250);
+// };
 
-    // Random animation duration
-    balloon.style.animationDuration = 5 + Math.random() * 5 + "s";
-
-    document.body.appendChild(balloon);
-
-    // Remove balloon after animation
-    balloon.addEventListener("animationend", () => {
-      balloon.remove();
-    });
-  }
-}
+// // Fire confetti on landing page
+// window.addEventListener("load", launchConfetti);
