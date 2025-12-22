@@ -59,4 +59,12 @@ document.querySelectorAll(".next-section").forEach((btn, i) => {
       document.getElementById("main-content").classList.remove("hidden");
     }
   });
+  
+});
+
+// 🔹 Fire confetti on landing page immediately
+window.addEventListener("DOMContentLoaded", () => {
+  if (typeof window.launchConfetti === "function") {
+    window.launchConfetti();
+  }
 });
