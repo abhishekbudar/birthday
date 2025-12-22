@@ -47,42 +47,12 @@ function showMilestone(index) {
   section.style.opacity = 1;
 }
 
-// Next button in milestone
-document.querySelectorAll(".next-section").forEach((btn, i) => {
-  btn.addEventListener("click", () => {
-    current++;
-    if(current < milestoneSections.length){
-      showMilestone(current);
-    } else {
-      // Final milestone done → show main content
-      milestones.classList.add("hidden");
-      document.getElementById("main-content").classList.remove("hidden");
-    }
-  });
-  
-});
-
-
-
-function typeText(element, text, speed = 30) {
-  element.innerHTML = "";
-  let i = 0;
-
-  const interval = setInterval(() => {
-    if (i < text.length) {
-      element.innerHTML += text.charAt(i);
-      i++;
-    } else {
-      clearInterval(interval);
-    }
-  }, speed);
-}
-
 document.querySelectorAll(".unlock").forEach(btn => {
   btn.addEventListener("click", () => {
     const puzzle = btn.closest(".puzzle");
+    if (!puzzle) return;
 
-    // ✅ Support multiple answers (comma-separated)
+    // Support multiple answers
     const answers = puzzle.dataset.answer
       .toLowerCase()
       .split(",")
@@ -92,29 +62,27 @@ document.querySelectorAll(".unlock").forEach(btn => {
       .toLowerCase()
       .trim();
 
-    // ✅ Check if any answer matches
     const isCorrect = answers.some(ans => userAnswer === ans);
 
     if (isCorrect) {
-      // 🔹 Confetti burst for correct answer
+      // Confetti
       if (typeof confetti === "function") {
         confetti({ particleCount: 80, spread: 70 });
       }
 
-      // 🔹 Landing page puzzle
-      if (puzzle.closest("#countdown-screen")) {
-        countdownScreen.classList.add("hidden");
-        milestones.classList.remove("hidden");
-        showMilestone(0);
-      } 
-      // 🔹 Milestone puzzle
-      else {
-        current++;
-        showMilestone(current);
-      }
+      // Hide hint if any
+      puzzle.querySelector(".hint").classList.add("hidden");
 
+      // Move to next milestone
+      current++; 
+      if (current < milestoneSections.length) {
+        showMilestone(current);
+      } else {
+        // Last milestone → show main content
+        milestones.classList.add("hidden");
+        document.getElementById("main-content").classList.remove("hidden");
+      }
     } else {
-      // Show hint if wrong
       puzzle.querySelector(".hint").classList.remove("hidden");
     }
   });
