@@ -25,7 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const confettiInterval = runConfetti(); // Start the confetti effect when page loads
 
   // Countdown timer (5 seconds for testing)
-  const targetDate = new Date(Date.now() + 5000).getTime(); // 5 seconds for testing
+  //const targetDate = new Date(Date.now() + 5000).getTime(); // 5 seconds for testing
+  const targetDate = new Date("December 31, 2025 00:00:00").getTime();
   const timer = setInterval(() => {
     const now = new Date().getTime();
     const distance = targetDate - now;
