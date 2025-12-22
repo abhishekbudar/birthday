@@ -78,32 +78,31 @@ function typeText(element, text, speed = 30) {
   }, speed);
 }
 
+
 document.querySelectorAll(".unlock").forEach(btn => {
   btn.addEventListener("click", () => {
     const puzzle = btn.closest(".puzzle");
+
     const answers = puzzle.dataset.answer
       .toLowerCase()
       .split(",")
       .map(a => a.trim());
 
-    const userAnswer = puzzle.querySelector(".answer").value.toLowerCase();
+    const userAnswer = puzzle.querySelector(".answer").value
+      .toLowerCase()
+      .trim();
 
     const isCorrect = answers.some(ans => userAnswer.includes(ans));
 
     if (isCorrect) {
 
-      // 🎉 small confetti burst on correct answer
-      if (typeof confetti === "function") {
-        confetti({ particleCount: 80, spread: 70 });
-      }
-
-      // Landing page
+      // 🔹 Landing page puzzle
       if (puzzle.closest("#countdown-screen")) {
         countdownScreen.classList.add("hidden");
         milestones.classList.remove("hidden");
         showMilestone(0);
-      }
-      // Milestones
+      } 
+      // 🔹 Milestone puzzle
       else {
         current++;
         showMilestone(current);
