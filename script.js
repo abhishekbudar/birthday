@@ -77,25 +77,44 @@ function typeText(element, text, speed = 30) {
     }
   }, speed);
 }
+
 document.querySelectorAll(".unlock").forEach(btn => {
   btn.addEventListener("click", () => {
     const puzzle = btn.closest(".puzzle");
-    const answers = puzzle.dataset.answer.toLowerCase().split(",").map(a => a.trim());
-    const userAnswer = puzzle.querySelector(".answer").value.toLowerCase().trim();
 
-    if (answers.some(ans => userAnswer === ans)) {
-      // Confetti
+    // ✅ Support multiple answers (comma-separated)
+    const answers = puzzle.dataset.answer
+      .toLowerCase()
+      .split(",")
+      .map(a => a.trim());
+
+    const userAnswer = puzzle.querySelector(".answer").value
+      .toLowerCase()
+      .trim();
+
+    // ✅ Check if any answer matches
+    const isCorrect = answers.some(ans => userAnswer === ans);
+
+    if (isCorrect) {
+      // 🔹 Confetti burst for correct answer
       if (typeof confetti === "function") {
-        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        confetti({ particleCount: 80, spread: 70 });
       }
 
-      // Landing page logic
+      // 🔹 Landing page puzzle
       if (puzzle.closest("#countdown-screen")) {
-        document.getElementById("countdown-screen").classList.add("hidden");
-        document.getElementById("milestones").classList.remove("hidden");
+        countdownScreen.classList.add("hidden");
+        milestones.classList.remove("hidden");
         showMilestone(0);
+      } 
+      // 🔹 Milestone puzzle
+      else {
+        current++;
+        showMilestone(current);
       }
+
     } else {
+      // Show hint if wrong
       puzzle.querySelector(".hint").classList.remove("hidden");
     }
   });
