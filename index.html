@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -13,31 +13,30 @@
   <img src="main.JPG" alt="You as a kid ❤️" class="child-img">
   <h1>Something special is waiting for you ❤️</h1>
   <div id="countdown" class="countdown"></div>
-  <button class="nextBtn">Start the journey ❤️</button> <!-- Changed to class -->
+  <!-- <button class="nextBtn">Start the journey ❤️</button> -->
+  <button id="nextBtn" class="nextBtn">Start the journey ❤️</button>
+
 </section>
 
 <!-- MILESTONE SECTIONS -->
 <section id="milestones" class="hidden">
+
   <!-- Childhood -->
   <section class="milestone" id="childhood">
-    <img src="childhood.jpg" class="milestone-img">
-    <p>
-      On the 31st of December, 2000, a little ray of sunshine was born into the Shirke family. From the very first moments, she brought joy, laughter, and endless smiles into the hearts of everyone around her.
-    </p>
-    <div class="puzzle" data-answer="mumma, mummy">
-        <p class="question">Your forever love ❤️</p>
-        <input type="text" class="answer" placeholder="Type your answer...">
-        <button class="unlock">Unlock next chapter ✨</button>
-        <p class="hint hidden">Hint: Mazi Sasubai 💕</p>
-    </div>
-  </section>
+  <img src="childhood.jpg" class="milestone-img">
+  <p>On the 31st of December, 2000, a little ray of sunshine was born into the Shirke family. From the very first moments, she brought joy, laughter, and endless smiles into the hearts of everyone around her.</p>
+  <div class="puzzle" data-answer="mumma, mummy">
+    <p class="question">Who is your forever love? ❤️</p>
+    <input type="text" class="answer" placeholder="Type your answer...">
+    <button class="unlock">Unlock next chapter ✨</button>
+    <p class="hint hidden">Hint: Mazi Sasubai 💕</p> <!-- Hidden hint -->
+  </div>
+</section>
 
   <!-- Teen Years -->
   <section class="milestone hidden" id="teen">
     <img src="teen.jpg" class="milestone-img">
-    <p>
-      As she grew into her teenage years, the world seemed even brighter. Curiosity turned into adventures, laughter became louder, and every day held a new discovery.
-    </p>
+    <p>As she grew into her teenage years, the world seemed even brighter. Curiosity turned into adventures, laughter became louder, and every day held a new discovery.</p>
     <div class="puzzle" data-answer="momo, momos">
         <p class="question">What food did we have on our first date? 🥟</p>
         <input type="text" class="answer" placeholder="Type your answer...">
@@ -49,7 +48,7 @@
   <!-- Graduation -->
   <section class="milestone hidden" id="graduation">
     <img src="graduation.jpg" class="milestone-img">
-    <p>We laughed, we teased, we had our share of fights, yet every challenge only brought us closer...</p>
+    <p>We laughed, we teased, we had our share of fights, yet every challenge only brought us closer. Through every joy and every quarrel, we grew together, learning, loving, and cherishing each other more each day.</p>
     <div class="puzzle" data-answer="chandratal,chandratal lake,chandra tal,moon lake">
         <p class="question">During our Spiti trip, which magical place stole our hearts? 🏔️✨</p>
         <input type="text" class="answer" placeholder="Cold winds, blue waters...">
@@ -61,7 +60,7 @@
   <!-- First Job / Adult Life -->
   <section class="milestone hidden" id="adult">
     <img src="adult.jpg" class="milestone-img">
-    <p>Now, at 24, you shine brighter than ever in your journey of life...</p>
+    <p>Now, at 24, you shine brighter than ever in your journey of life. Balancing work, home responsibilities, and your dreams — from your YouTube adventures to your Instagram journey — you inspire everyone around you with your dedication, creativity, and passion.</p>
     <div class="puzzle" data-answer="ponko, poncho">
         <p class="question">What is the name of the first soft toy you won by yourself? 🧸</p>
         <input type="text" class="answer" placeholder="Type the name...">
@@ -87,8 +86,8 @@
   </section>
 </section>
 
-<script src="script.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-<script src="confetti.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
