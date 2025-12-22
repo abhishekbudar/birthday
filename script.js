@@ -1,11 +1,11 @@
-// ====== COUNTDOWN LOGIC ======
+// Countdown Logic
 const countdownEl = document.getElementById("countdown");
 const nextBtn = document.getElementById("nextBtn");
 const countdownScreen = document.getElementById("countdown-screen");
 const milestones = document.getElementById("milestones");
 
-// Countdown timer
-const targetDate = new Date(Date.now() + 5000).getTime();  // 5 seconds for testing
+// Countdown timer (5 seconds for testing)
+const targetDate = new Date(Date.now() + 5000).getTime();
 const timer = setInterval(() => {
   const now = new Date().getTime();
   const distance = targetDate - now;
@@ -25,19 +25,18 @@ const timer = setInterval(() => {
   countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 }, 1000);
 
-// Unlock countdown → show first milestone
+// Show first milestone after countdown
 nextBtn.addEventListener("click", () => {
   countdownScreen.classList.add("hidden");
   milestones.classList.remove("hidden");
   showMilestone(0);  // Show first milestone
 });
 
-// ====== MILESTONES LOGIC ======
+// Milestone Logic
 const milestoneSections = document.querySelectorAll(".milestone");
 let current = 0;
 
 function showMilestone(index) {
-  // Hide all milestones and then display the correct one
   milestoneSections.forEach((section) => {
     section.classList.add("hidden");
     section.style.opacity = 0;
@@ -46,10 +45,10 @@ function showMilestone(index) {
   const section = milestoneSections[index];
   section.classList.remove("hidden");
   section.style.opacity = 1;
-  current = index;  // Sync the current milestone
+  current = index;
 }
 
-// ====== PUZZLE BUTTONS ======
+// Puzzle Button Logic
 document.querySelectorAll(".unlock").forEach((btn) => {
   btn.addEventListener("click", () => {
     const puzzle = btn.closest(".milestone");
@@ -62,11 +61,11 @@ document.querySelectorAll(".unlock").forEach((btn) => {
     const userAnswerInput = puzzle.querySelector(".answer");
     const userAnswer = userAnswerInput ? userAnswerInput.value.toLowerCase().trim() : "";
 
-    // Check if the user entered something
+    // Exit if no answer entered
     if (userAnswer === "") {
       const hint = puzzle.querySelector(".hint");
       if (hint) hint.classList.remove("hidden");
-      return;  // Exit if no answer
+      return;
     }
 
     // Check if the answer is correct
@@ -77,14 +76,13 @@ document.querySelectorAll(".unlock").forEach((btn) => {
         confetti({ particleCount: 80, spread: 70 });
       }
 
-      // Disable the button to avoid multiple submissions
+      // Disable the button after the correct answer
       btn.disabled = true;
 
-      // Move to the next milestone
+      // Move to the next milestone if available
       if (current + 1 < milestoneSections.length) {
         showMilestone(current + 1);
       } else {
-        // Show final content if no more milestones
         milestones.classList.add("hidden");
         document.getElementById("main-content").classList.remove("hidden");
       }
@@ -96,7 +94,7 @@ document.querySelectorAll(".unlock").forEach((btn) => {
   });
 });
 
-// ====== NEXT SECTION BUTTONS ======
+// Next Section Button Logic (if any section has a "Next" button)
 document.querySelectorAll(".next-section").forEach((btn) => {
   btn.addEventListener("click", () => {
     const section = btn.closest(".milestone");
