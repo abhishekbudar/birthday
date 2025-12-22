@@ -140,27 +140,3 @@ button:hover:enabled { transform: scale(1.05); }
   color: #777;
 }
 
-.balloon {
-  position: absolute;
-  bottom: -100px; /* start below screen */
-  width: 50px;
-  height: 70px;
-  border-radius: 50% 50% 50% 50%;
-  opacity: 0.8;
-  animation: rise linear forwards;
-  z-index: 999;
-}
-
-@keyframes rise {
-  0% {
-    bottom: -100px;
-    transform: translateX(0) rotate(0deg);
-  }
-  50% {
-    transform: translateX(20px) rotate(15deg);
-  }
-  100% {
-    bottom: 100vh;
-    transform: translateX(-20px) rotate(-15deg);
-  }
-}
