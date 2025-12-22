@@ -1,14 +1,34 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+.screen {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background: #ffe6f0;
   text-align: center;
 }
 
-.hero {
-  padding: 100px 20px;
+.countdown {
+  font-size: 2rem;
+  margin: 20px 0;
+  color: #ff4d6d;
 }
 
-.hero h1 {
-  color: #ff4d6d;
+button {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 30px;
+  font-size: 18px;
+  background: #ff4d6d;
+  color: white;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+button:enabled {
+  opacity: 1;
+}
+
+.hidden {
+  display: none;
 }

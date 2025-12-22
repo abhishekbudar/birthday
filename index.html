@@ -1,21 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Happy Birthday ❤️</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="style.css">
-</head>
 <body>
 
-<h1 style="color:red;">PAGE LOADED</h1>
+<!-- COUNTDOWN SCREEN -->
+<section id="countdown-screen" class="screen">
+  <h1>Something special is waiting for you ❤️</h1>
+  <div id="countdown" class="countdown"></div>
+  <button id="nextBtn" disabled>Next ➜</button>
+</section>
 
-<section class="hero">
-  <h1>Happy Birthday, My Love ❤️</h1>
-  <p>Today is all about you 💖</p>
+<!-- MAIN CONTENT (HIDDEN INITIALLY) -->
+<section id="main-content" class="hidden">
+
+  <section class="hero">
+    <h1>Happy Birthday, My Love ❤️</h1>
+    <p></p>
+  </section>
+
+  <section class="gallery">
+    <h2>Our Memories 📸</h2>
+    <div class="images">
+      <img src="img1.jpg">
+      <img src="img2.jpg">
+      <img src="img3.jpg">
+    </div>
+  </section>
+
 </section>
 
 <script src="script.js"></script>
 </body>
-</html>
