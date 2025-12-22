@@ -18,9 +18,9 @@ const timer = setInterval(() => {
   }
 
   const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000*60*60));
-  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
-  const seconds = Math.floor((distance % (1000*60)) / 1000);
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
   countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 }, 1000);
@@ -30,6 +30,7 @@ nextBtn.addEventListener("click", () => {
   countdownScreen.classList.add("hidden");
   milestones.classList.remove("hidden");
   showMilestone(0);
+  launchBalloons(10);  // Add balloons when countdown ends
 });
 
 // ====== MILESTONES LOGIC ======
@@ -45,6 +46,9 @@ function showMilestone(index) {
   section.classList.remove("hidden");
   section.style.opacity = 1;
   current = index; // always keep current in sync
+
+  // Launch balloons when a milestone is shown
+  launchBalloons(5);
 }
 
 // ====== PUZZLE BUTTONS ======
@@ -55,11 +59,13 @@ document.querySelectorAll(".unlock").forEach((btn) => {
     const answers = answersAttr
       .toLowerCase()
       .split(",")
-      .map(a => a.trim());
+      .map((a) => a.trim());
     const userAnswerInput = puzzle.querySelector(".answer");
-    const userAnswer = userAnswerInput ? userAnswerInput.value.toLowerCase().trim() : "";
+    const userAnswer = userAnswerInput
+      ? userAnswerInput.value.toLowerCase().trim()
+      : "";
 
-    const isCorrect = answers.length === 0 || answers.some(ans => userAnswer === ans);
+    const isCorrect = answers.length === 0 || answers.some((ans) => userAnswer === ans);
 
     if (isCorrect) {
       // Fire confetti
@@ -79,6 +85,7 @@ document.querySelectorAll(".unlock").forEach((btn) => {
         } else {
           milestones.classList.add("hidden");
           document.getElementById("main-content").classList.remove("hidden");
+          launchBalloons(15); // Launch more balloons at the end
         }
       }
     } else {
@@ -99,29 +106,32 @@ document.querySelectorAll(".next-section").forEach((btn) => {
     } else {
       milestones.classList.add("hidden");
       document.getElementById("main-content").classList.remove("hidden");
+      launchBalloons(15); // Launch balloons at the end
     }
   });
 });
 
-// // ====== CONFETTI ======
-// window.launchConfetti = function() {
-//   const duration = 5000;
-//   const animationEnd = Date.now() + duration;
-//   const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999 };
+// ====== LAUNCH BALLOONS FUNCTION ======
+function launchBalloons(count = 10) {
+  for (let i = 0; i < count; i++) {
+    const balloon = document.createElement("div");
+    balloon.classList.add("balloon");
 
-//   const interval = setInterval(function() {
-//     const timeLeft = animationEnd - Date.now();
-//     if (timeLeft <= 0) {
-//       clearInterval(interval);
-//       return;
-//     }
+    // Random horizontal position
+    balloon.style.left = Math.random() * 90 + "vw";
 
-//     confetti(Object.assign({}, defaults, {
-//       particleCount: 5 + Math.random() * 5,
-//       origin: { x: Math.random(), y: Math.random() - 0.2 }
-//     }));
-//   }, 250);
-// };
+    // Random color
+    const colors = ["red", "blue", "yellow", "green", "pink", "orange", "purple"];
+    balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
 
-// // Fire confetti on landing page
-// window.addEventListener("load", launchConfetti);
+    // Random animation duration
+    balloon.style.animationDuration = 5 + Math.random() * 5 + "s";
+
+    document.body.appendChild(balloon);
+
+    // Remove balloon after animation
+    balloon.addEventListener("animationend", () => {
+      balloon.remove();
+    });
+  }
+}
