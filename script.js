@@ -50,14 +50,21 @@ function showMilestone(index) {
 // ====== PUZZLE BUTTONS ======
 document.querySelectorAll(".unlock").forEach((btn) => {
   btn.addEventListener("click", () => {
-    const puzzle = btn.closest(".milestone, #countdown-screen");
+    const puzzle = btn.closest(".milestone");
     const answersAttr = puzzle.dataset.answer || "";
     const answers = answersAttr
       .toLowerCase()
       .split(",")
-      .map(a => a.trim());
+      .map(a => a.trim());  // Trim spaces around answers
     const userAnswerInput = puzzle.querySelector(".answer");
     const userAnswer = userAnswerInput ? userAnswerInput.value.toLowerCase().trim() : "";
+
+    // Check if the user entered a valid answer
+    if (userAnswer === "") {
+      const hint = puzzle.querySelector(".hint");
+      if (hint) hint.classList.remove("hidden");
+      return; // Don't proceed if the input is empty
+    }
 
     const isCorrect = answers.some(ans => userAnswer === ans);
 
