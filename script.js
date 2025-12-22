@@ -78,11 +78,11 @@ function typeText(element, text, speed = 30) {
   }, speed);
 }
 
-
 document.querySelectorAll(".unlock").forEach(btn => {
   btn.addEventListener("click", () => {
     const puzzle = btn.closest(".puzzle");
 
+    // ✅ Support multiple answers (comma-separated)
     const answers = puzzle.dataset.answer
       .toLowerCase()
       .split(",")
@@ -92,9 +92,14 @@ document.querySelectorAll(".unlock").forEach(btn => {
       .toLowerCase()
       .trim();
 
-    const isCorrect = answers.some(ans => userAnswer.includes(ans));
+    // ✅ Check if any answer matches
+    const isCorrect = answers.some(ans => userAnswer === ans);
 
     if (isCorrect) {
+      // 🔹 Confetti burst for correct answer
+      if (typeof confetti === "function") {
+        confetti({ particleCount: 80, spread: 70 });
+      }
 
       // 🔹 Landing page puzzle
       if (puzzle.closest("#countdown-screen")) {
@@ -109,6 +114,7 @@ document.querySelectorAll(".unlock").forEach(btn => {
       }
 
     } else {
+      // Show hint if wrong
       puzzle.querySelector(".hint").classList.remove("hidden");
     }
   });
