@@ -56,17 +56,23 @@ document.querySelectorAll(".unlock").forEach((btn) => {
       .toLowerCase()
       .split(",")
       .map(a => a.trim());  // Trim spaces around answers
+
     const userAnswerInput = puzzle.querySelector(".answer");
     const userAnswer = userAnswerInput ? userAnswerInput.value.toLowerCase().trim() : "";
 
+    console.log(`User answer: "${userAnswer}"`); // Debugging the input
+
     // Check if the user entered a valid answer
     if (userAnswer === "") {
+      console.log("No answer entered, showing hint."); // Debugging empty input case
       const hint = puzzle.querySelector(".hint");
       if (hint) hint.classList.remove("hidden");
       return; // Don't proceed if the input is empty
     }
 
     const isCorrect = answers.some(ans => userAnswer === ans);
+
+    console.log(`Is answer correct: ${isCorrect}`); // Debugging answer check
 
     if (isCorrect) {
       // Fire confetti
