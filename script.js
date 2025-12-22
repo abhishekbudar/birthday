@@ -1,11 +1,10 @@
+// ====== COUNTDOWN LOGIC ======
 const countdownEl = document.getElementById("countdown");
 const nextBtn = document.getElementById("nextBtn");
-const mainContent = document.getElementById("main-content");
 const countdownScreen = document.getElementById("countdown-screen");
+const milestones = document.getElementById("milestones");
 
-// Set target date: 31 Dec 00:00
-//const targetDate = new Date("December 31, 2025 00:00:00").getTime();
-const targetDate = new Date(Date.now() + 5000).getTime();
+const targetDate = new Date("December 31, 2025 00:00:00").getTime();
 
 const timer = setInterval(() => {
   const now = new Date().getTime();
@@ -19,15 +18,44 @@ const timer = setInterval(() => {
   }
 
   const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000*60*60));
+  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+  const seconds = Math.floor((distance % (1000*60)) / 1000);
 
-  countdownEl.textContent =
-    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 }, 1000);
 
+// Unlock countdown → show first milestone
 nextBtn.addEventListener("click", () => {
-  countdownScreen.style.display = "none";
-  mainContent.classList.remove("hidden");
+  countdownScreen.classList.add("hidden");
+  milestones.classList.remove("hidden");
+  showMilestone(0);
+});
+
+// ====== MILESTONES LOGIC ======
+const milestoneSections = document.querySelectorAll(".milestone");
+let current = 0;
+
+function showMilestone(index) {
+  milestoneSections.forEach((section, i) => {
+    section.classList.add("hidden");
+    section.style.opacity = 0;
+  });
+  const section = milestoneSections[index];
+  section.classList.remove("hidden");
+  section.style.opacity = 1;
+}
+
+// Next button in milestone
+document.querySelectorAll(".next-section").forEach((btn, i) => {
+  btn.addEventListener("click", () => {
+    current++;
+    if(current < milestoneSections.length){
+      showMilestone(current);
+    } else {
+      // Final milestone done → show main content
+      milestones.classList.add("hidden");
+      document.getElementById("main-content").classList.remove("hidden");
+    }
+  });
 });

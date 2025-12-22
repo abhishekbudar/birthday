@@ -4,23 +4,52 @@
   <meta charset="UTF-8">
   <title>Happy Birthday ❤️</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- LINK YOUR CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <!-- COUNTDOWN SCREEN -->
 <section id="countdown-screen" class="screen">
-  <!-- Childhood photo -->
-  <img src="childhood.jpeg" alt="You as a kid ❤️" class="child-img">
-
+  <img src="childhood.jpg" alt="Childhood" class="child-img">
   <h1>Something special is waiting for you ❤️</h1>
   <div id="countdown" class="countdown"></div>
   <button id="nextBtn" disabled>Next ➜</button>
 </section>
 
-<!-- MAIN CONTENT (HIDDEN INITIALLY) -->
+<!-- MILESTONE SECTIONS -->
+<section id="milestones" class="hidden">
+
+  <!-- Childhood -->
+  <section class="milestone" id="childhood">
+    <img src="childhood.jpg" class="milestone-img">
+    <p>From your early days of curiosity and laughter…</p>
+    <button class="next-section">Next ➜</button>
+  </section>
+
+  <!-- Teen Years -->
+  <section class="milestone hidden" id="teen">
+    <img src="teen.jpg" class="milestone-img">
+    <p>The fun, adventures, and learning of your teen years…</p>
+    <button class="next-section">Next ➜</button>
+  </section>
+
+  <!-- Graduation -->
+  <section class="milestone hidden" id="graduation">
+    <img src="graduation.jpg" class="milestone-img">
+    <p>Graduation day, celebrating your achievements and dreams…</p>
+    <button class="next-section">Next ➜</button>
+  </section>
+
+  <!-- First Job / Adult Life -->
+  <section class="milestone hidden" id="adult">
+    <img src="adult.jpg" class="milestone-img">
+    <p>Now at 24, shining bright in your journey of life…</p>
+    <button class="next-section" id="finalBtn">See your surprise ❤️</button>
+  </section>
+
+</section>
+
+<!-- MAIN BIRTHDAY CONTENT -->
 <section id="main-content" class="hidden">
 
   <section class="hero">
