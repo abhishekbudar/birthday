@@ -4,7 +4,8 @@ const nextBtn = document.getElementById("nextBtn");
 const countdownScreen = document.getElementById("countdown-screen");
 const milestones = document.getElementById("milestones");
 
-const targetDate = new Date("December 31, 2025 00:00:00").getTime();
+//const targetDate = new Date("December 31, 2025 00:00:00").getTime();
+const targetDate = new Date(Date.now() + 5000).getTime();
 
 const timer = setInterval(() => {
   const now = new Date().getTime();
