@@ -4,9 +4,8 @@ const nextBtn = document.getElementById("nextBtn");
 const countdownScreen = document.getElementById("countdown-screen");
 const milestones = document.getElementById("milestones");
 
-//const targetDate = new Date("December 31, 2025 00:00:00").getTime();
+// Countdown timer (optional for now)
 const targetDate = new Date(Date.now() + 5000).getTime();
-
 const timer = setInterval(() => {
   const now = new Date().getTime();
   const distance = targetDate - now;
@@ -38,52 +37,91 @@ const milestoneSections = document.querySelectorAll(".milestone");
 let current = 0;
 
 function showMilestone(index) {
-  milestoneSections.forEach((section, i) => {
+  milestoneSections.forEach((section) => {
     section.classList.add("hidden");
     section.style.opacity = 0;
   });
   const section = milestoneSections[index];
   section.classList.remove("hidden");
   section.style.opacity = 1;
+  current = index; // always keep current in sync
 }
 
-document.querySelectorAll(".unlock").forEach(btn => {
+// ====== PUZZLE BUTTONS ======
+document.querySelectorAll(".unlock").forEach((btn) => {
   btn.addEventListener("click", () => {
-    const puzzle = btn.closest(".puzzle");
-    if (!puzzle) return;
-
-    // Support multiple answers
-    const answers = puzzle.dataset.answer
+    const puzzle = btn.closest(".milestone, #countdown-screen");
+    const answersAttr = puzzle.dataset.answer || "";
+    const answers = answersAttr
       .toLowerCase()
       .split(",")
       .map(a => a.trim());
+    const userAnswerInput = puzzle.querySelector(".answer");
+    const userAnswer = userAnswerInput ? userAnswerInput.value.toLowerCase().trim() : "";
 
-    const userAnswer = puzzle.querySelector(".answer").value
-      .toLowerCase()
-      .trim();
-
-    const isCorrect = answers.some(ans => userAnswer === ans);
+    const isCorrect = answers.length === 0 || answers.some(ans => userAnswer === ans);
 
     if (isCorrect) {
-      // Confetti
+      // Fire confetti
       if (typeof confetti === "function") {
         confetti({ particleCount: 80, spread: 70 });
       }
 
-      // Hide hint if any
-      puzzle.querySelector(".hint").classList.add("hidden");
-
-      // Move to next milestone
-      current++; 
-      if (current < milestoneSections.length) {
-        showMilestone(current);
+      // If this is the countdown screen
+      if (puzzle.id === "countdown-screen") {
+        countdownScreen.classList.add("hidden");
+        milestones.classList.remove("hidden");
+        showMilestone(0);
       } else {
-        // Last milestone → show main content
-        milestones.classList.add("hidden");
-        document.getElementById("main-content").classList.remove("hidden");
+        // Normal milestone → show next
+        if (current + 1 < milestoneSections.length) {
+          showMilestone(current + 1);
+        } else {
+          milestones.classList.add("hidden");
+          document.getElementById("main-content").classList.remove("hidden");
+        }
       }
     } else {
-      puzzle.querySelector(".hint").classList.remove("hidden");
+      const hint = puzzle.querySelector(".hint");
+      if (hint) hint.classList.remove("hidden");
     }
   });
 });
+
+// ====== NEXT SECTION BUTTONS ======
+document.querySelectorAll(".next-section").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const section = btn.closest(".milestone");
+    const index = Array.from(milestoneSections).indexOf(section);
+
+    if (index + 1 < milestoneSections.length) {
+      showMilestone(index + 1);
+    } else {
+      milestones.classList.add("hidden");
+      document.getElementById("main-content").classList.remove("hidden");
+    }
+  });
+});
+
+// // ====== CONFETTI ======
+// window.launchConfetti = function() {
+//   const duration = 5000;
+//   const animationEnd = Date.now() + duration;
+//   const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999 };
+
+//   const interval = setInterval(function() {
+//     const timeLeft = animationEnd - Date.now();
+//     if (timeLeft <= 0) {
+//       clearInterval(interval);
+//       return;
+//     }
+
+//     confetti(Object.assign({}, defaults, {
+//       particleCount: 5 + Math.random() * 5,
+//       origin: { x: Math.random(), y: Math.random() - 0.2 }
+//     }));
+//   }, 250);
+// };
+
+// // Fire confetti on landing page
+// window.addEventListener("load", launchConfetti);
