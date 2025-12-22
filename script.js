@@ -38,14 +38,19 @@ const milestoneSections = document.querySelectorAll(".milestone");
 let current = 0;
 
 function showMilestone(index) {
-  milestoneSections.forEach((section, i) => {
+  milestoneSections.forEach(section => {
     section.classList.add("hidden");
-    section.style.opacity = 0;
   });
+
   const section = milestoneSections[index];
   section.classList.remove("hidden");
-  section.style.opacity = 1;
+
+  const paragraph = section.querySelector("p");
+  const fullText = paragraph.textContent;
+
+  typeText(paragraph, fullText, 25);
 }
+
 
 // Next button in milestone
 document.querySelectorAll(".next-section").forEach((btn, i) => {
@@ -68,3 +73,18 @@ window.addEventListener("DOMContentLoaded", () => {
     window.launchConfetti();
   }
 });
+
+
+function typeText(element, text, speed = 30) {
+  element.innerHTML = "";
+  let i = 0;
+
+  const interval = setInterval(() => {
+    if (i < text.length) {
+      element.innerHTML += text.charAt(i);
+      i++;
+    } else {
+      clearInterval(interval);
+    }
+  }, speed);
+}
