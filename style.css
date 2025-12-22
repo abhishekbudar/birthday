@@ -80,18 +80,18 @@ button:hover:enabled { transform: scale(1.05); }
 .images img { width: 220px; border-radius: 15px; transition: transform 0.3s; }
 .images img:hover { transform: scale(1.1); }
 
-/* Milestone animation */
+/* Smooth entrance for milestones */
 .milestone {
+  text-align: center;
   max-width: 800px;
   margin: auto;
-  text-align: center;
-  animation: fadeUp 1.2s ease forwards;
+  animation: fadeSlide 1s ease;
 }
 
-@keyframes fadeUp {
+@keyframes fadeSlide {
   from {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -100,9 +100,10 @@ button:hover:enabled { transform: scale(1.05); }
 }
 
 .milestone-img {
-  width: 280px;
-  max-width: 80%;
-  border-radius: 20px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.25);
-  margin-bottom: 25px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.milestone-img:hover {
+  transform: scale(1.04);
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.25);
 }

@@ -38,19 +38,14 @@ const milestoneSections = document.querySelectorAll(".milestone");
 let current = 0;
 
 function showMilestone(index) {
-  milestoneSections.forEach(section => {
+  milestoneSections.forEach((section, i) => {
     section.classList.add("hidden");
+    section.style.opacity = 0;
   });
-
   const section = milestoneSections[index];
   section.classList.remove("hidden");
-
-  const paragraph = section.querySelector("p");
-  const fullText = paragraph.textContent;
-
-  typeText(paragraph, fullText, 25);
+  section.style.opacity = 1;
 }
-
 
 // Next button in milestone
 document.querySelectorAll(".next-section").forEach((btn, i) => {
