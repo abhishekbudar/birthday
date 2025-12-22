@@ -41,6 +41,7 @@ function showMilestone(index) {
     section.classList.add("hidden");
     section.style.opacity = 0;
   });
+
   const section = milestoneSections[index];
   section.classList.remove("hidden");
   section.style.opacity = 1;
@@ -55,44 +56,34 @@ document.querySelectorAll(".unlock").forEach((btn) => {
     const answers = answersAttr
       .toLowerCase()
       .split(",")
-      .map(a => a.trim());  // Trim spaces around answers
+      .map(a => a.trim());
 
     const userAnswerInput = puzzle.querySelector(".answer");
     const userAnswer = userAnswerInput ? userAnswerInput.value.toLowerCase().trim() : "";
 
-    console.log(`User answer: "${userAnswer}"`); // Debugging the input
-
-    // Check if the user entered a valid answer
+    // Don't proceed if the answer is empty
     if (userAnswer === "") {
-      console.log("No answer entered, showing hint."); // Debugging empty input case
       const hint = puzzle.querySelector(".hint");
       if (hint) hint.classList.remove("hidden");
-      return; // Don't proceed if the input is empty
+      return;
     }
 
     const isCorrect = answers.some(ans => userAnswer === ans);
 
-    console.log(`Is answer correct: ${isCorrect}`); // Debugging answer check
-
     if (isCorrect) {
-      // Fire confetti
       if (typeof confetti === "function") {
         confetti({ particleCount: 80, spread: 70 });
       }
 
-      // If this is the countdown screen
-      if (puzzle.id === "countdown-screen") {
-        countdownScreen.classList.add("hidden");
-        milestones.classList.remove("hidden");
-        showMilestone(0);
+      // Disable the button to avoid multiple clicks
+      btn.disabled = true;
+
+      // Move to the next milestone or show final content
+      if (current + 1 < milestoneSections.length) {
+        showMilestone(current + 1);
       } else {
-        // Normal milestone → show next
-        if (current + 1 < milestoneSections.length) {
-          showMilestone(current + 1);
-        } else {
-          milestones.classList.add("hidden");
-          document.getElementById("main-content").classList.remove("hidden");
-        }
+        milestones.classList.add("hidden");
+        document.getElementById("main-content").classList.remove("hidden");
       }
     } else {
       const hint = puzzle.querySelector(".hint");
