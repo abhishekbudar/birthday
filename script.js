@@ -4,7 +4,7 @@ const nextBtn = document.getElementById("nextBtn");
 const countdownScreen = document.getElementById("countdown-screen");
 const milestones = document.getElementById("milestones");
 
-// Countdown timer (optional for now)
+// Countdown timer
 const targetDate = new Date(Date.now() + 5000).getTime();
 const timer = setInterval(() => {
   const now = new Date().getTime();
@@ -18,9 +18,9 @@ const timer = setInterval(() => {
   }
 
   const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000*60*60));
-  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
-  const seconds = Math.floor((distance % (1000*60)) / 1000);
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
   countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 }, 1000);
@@ -59,7 +59,7 @@ document.querySelectorAll(".unlock").forEach((btn) => {
     const userAnswerInput = puzzle.querySelector(".answer");
     const userAnswer = userAnswerInput ? userAnswerInput.value.toLowerCase().trim() : "";
 
-    const isCorrect = answers.length === 0 || answers.some(ans => userAnswer === ans);
+    const isCorrect = answers.some(ans => userAnswer === ans);
 
     if (isCorrect) {
       // Fire confetti
@@ -102,26 +102,3 @@ document.querySelectorAll(".next-section").forEach((btn) => {
     }
   });
 });
-
-// // ====== CONFETTI ======
-// window.launchConfetti = function() {
-//   const duration = 5000;
-//   const animationEnd = Date.now() + duration;
-//   const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999 };
-
-//   const interval = setInterval(function() {
-//     const timeLeft = animationEnd - Date.now();
-//     if (timeLeft <= 0) {
-//       clearInterval(interval);
-//       return;
-//     }
-
-//     confetti(Object.assign({}, defaults, {
-//       particleCount: 5 + Math.random() * 5,
-//       origin: { x: Math.random(), y: Math.random() - 0.2 }
-//     }));
-//   }, 250);
-// };
-
-// // Fire confetti on landing page
-// window.addEventListener("load", launchConfetti);
