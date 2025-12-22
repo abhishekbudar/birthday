@@ -99,3 +99,31 @@ button:hover:enabled {
 .images img:hover {
   transform: scale(1.1);
 }
+
+/* Childhood image settings */
+.child-img {
+  width: 100%;            /* scales with container */
+  max-width: 250px;       /* caps the size */
+  height: auto;           /* maintain aspect ratio */
+  border-radius: 20px;    
+  margin-bottom: 20px;    
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  
+  /* FADE-IN EFFECT */
+  opacity: 0;             /* start invisible */
+  animation: fadeIn 1.5s forwards; /* animate to visible */
+  
+  /* OPTIONAL HOVER ZOOM */
+  transition: transform 0.3s ease;
+}
+
+.child-img:hover {
+  transform: scale(1.05);
+}
+
+/* KEYFRAMES FOR FADE-IN */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
