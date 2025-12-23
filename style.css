@@ -74,11 +74,57 @@ button:hover:enabled { transform: scale(1.05); }
 .hero p { font-size: 1.3rem; }
 
 /* GALLERY */
-.gallery { padding: 60px 20px; }
+/* .gallery { padding: 60px 20px; }
 .gallery h2 { color: #ff4d6d; margin-bottom: 30px; }
 .images { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
 .images img { width: 220px; border-radius: 15px; transition: transform 0.3s; }
-.images img:hover { transform: scale(1.1); }
+.images img:hover { transform: scale(1.1); } */
+
+/* GALLERY */
+.gallery {
+  padding: 60px 20px;
+}
+
+.gallery h2 {
+  color: #ff4d6d;
+  margin-bottom: 30px;
+}
+
+.images {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.images img {
+  width: 220px; /* Fixed width */
+  height: 220px; /* Fixed height */
+  object-fit: cover; /* Ensures the image covers the container without stretching */
+  border-radius: 15px;
+  transition: transform 0.3s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Adds a soft shadow for a polished look */
+}
+
+.images img:hover {
+  transform: scale(1.1); /* Zoom effect on hover */
+}
+
+/* Make the images responsive for smaller screens */
+@media (max-width: 768px) {
+  .images img {
+    width: 150px; /* Reduce image size for smaller screens */
+    height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .images img {
+    width: 120px; /* Further reduce image size for mobile */
+    height: 120px;
+  }
+}
+
 
 /* Smooth entrance for milestones */
 .milestone {
@@ -140,3 +186,34 @@ button:hover:enabled { transform: scale(1.05); }
   color: #777;
 }
 
+#love-letter {
+  font-size: 1.5rem;
+  color: #ff4d6d;
+  font-family: "Times New Roman", Times, serif;
+  width: 100%;         /* Allow the text container to fill the available width */
+  max-width: 90%;      /* Prevent it from stretching too wide on large screens */
+  margin: 0 auto;      /* Center-align the text */
+  padding: 20px;       /* Add some padding around the text */
+  box-sizing: border-box; /* Ensure padding is included in width calculation */
+  display: block;      /* Make it behave like a block element */
+  white-space: normal; /* Allow wrapping */
+  overflow: hidden;    /* Prevent text from overflowing */
+  animation: typing 10s steps(100) 1s forwards, blink 0.75s step-end infinite;
+}
+
+/* Typing animation */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%; /* The container width expands to show the full text */
+  }
+}
+
+/* Blinking cursor effect */
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}

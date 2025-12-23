@@ -25,8 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const confettiInterval = runConfetti(); // Start the confetti effect when page loads
 
   // Countdown timer (5 seconds for testing)
-  //const targetDate = new Date(Date.now() + 5000).getTime(); // 5 seconds for testing
-  const targetDate = new Date("December 31, 2025 00:00:00").getTime();
+  const targetDate = new Date(Date.now() + 5000).getTime(); // 5 seconds for testing
+  //const targetDate = new Date("December 31, 2025 00:00:00").getTime();
   const timer = setInterval(() => {
     const now = new Date().getTime();
     const distance = targetDate - now;
@@ -54,6 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
     showMilestone(0); // Show first milestone
   });
 
+  const letter = "My dearest, there are no words that can fully express the way you make me feel. With each passing day, my love for you grows deeper. You have brought joy, laughter, and a sense of peace into my life that I never knew I needed. Every memory we’ve made together fills my heart with happiness, and I look forward to building countless more. You are my everything. Happy Birthday, my love. 💖";
+  
+  const loveLetterElement = document.getElementById("love-letter");
+  loveLetterElement.textContent = letter; // Set the full love letter
+
   // Milestone Logic
   const milestoneSections = document.querySelectorAll(".milestone");
   let current = 0;  // Track the current milestone
@@ -71,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-
+  
   // Puzzle Button Logic (Unlock next milestone)
   document.querySelectorAll(".unlock").forEach((btn) => {
     btn.addEventListener("click", () => {
