@@ -80,9 +80,11 @@ button:hover:enabled { transform: scale(1.05); }
 .images img { width: 220px; border-radius: 15px; transition: transform 0.3s; }
 .images img:hover { transform: scale(1.1); } */
 
+
 /* GALLERY */
 .gallery {
   padding: 60px 20px;
+  text-align: center;
 }
 
 .gallery h2 {
@@ -90,40 +92,43 @@ button:hover:enabled { transform: scale(1.05); }
   margin-bottom: 30px;
 }
 
-.images {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  flex-wrap: wrap;
+/* Image Wrapper */
+.images-wrapper {
+  position: relative;
+  width: 100%;
+  height: 500px; /* Set height of the gallery */
+  margin: 0 auto;
+  overflow: hidden; /* Hide images that are not in view */
 }
 
-.images img {
+/* Each set of images */
+.image-set {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;  /* All image sets will be hidden initially */
+  transition: opacity 1s ease-in-out; /* Fade effect */
+}
+
+.image-set img {
   width: 220px; /* Fixed width */
   height: 220px; /* Fixed height */
-  object-fit: cover; /* Ensures the image covers the container without stretching */
+  object-fit: cover; /* Ensures the image covers the container */
   border-radius: 15px;
-  transition: transform 0.3s;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Adds a soft shadow for a polished look */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional shadow */
 }
 
-.images img:hover {
-  transform: scale(1.1); /* Zoom effect on hover */
+/* Animation to fade in/out between image sets */
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
-/* Make the images responsive for smaller screens */
-@media (max-width: 768px) {
-  .images img {
-    width: 150px; /* Reduce image size for smaller screens */
-    height: 150px;
-  }
-}
 
-@media (max-width: 480px) {
-  .images img {
-    width: 120px; /* Further reduce image size for mobile */
-    height: 120px;
-  }
-}
 
 
 /* Smooth entrance for milestones */
@@ -215,5 +220,24 @@ button:hover:enabled { transform: scale(1.05); }
 @keyframes blink {
   50% {
     border-color: transparent;
+  }
+}
+
+/* Add the spinning effect to the heart emoji */
+.heart {
+  display: inline-block;  /* Make sure the heart is treated as an inline block */
+  animation: spinHeart 2s linear infinite;  /* 2s for each full rotation, infinite loop */
+}
+
+/* Define the spin animation */
+@keyframes spinHeart {
+  0% {
+    transform: rotate(0deg);  /* Start with no rotation */
+  }
+  50% {
+    transform: rotate(180deg);  /* Rotate halfway (180 degrees) */
+  }
+  100% {
+    transform: rotate(360deg);  /* Complete one full rotation (360 degrees) */
   }
 }
