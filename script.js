@@ -28,8 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const confettiInterval = runConfetti(); // Start the confetti effect when page loads
 
   // Countdown timer (5 seconds for testing)
-  //const targetDate = new Date(Date.now() + 5000).getTime(); // 5 seconds for testing
-  const targetDate = new Date("December 31, 2025 00:00:00").getTime();
+  const targetDate = new Date(Date.now() + 5000).getTime(); // 5 seconds for testing
   const timer = setInterval(() => {
     const now = new Date().getTime();
     const distance = targetDate - now;
@@ -58,16 +57,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Start the background music when milestones appear
     music.play();  // Play the music once the milestones section is visible
+
+    // Add floating musical notes randomly across the screen
+    addMusicalNotes();
   });
 
-  // const letter = "My dearest, there are no words that can fully express the way you make me feel. With each passing day, my love for you grows deeper. You have brought joy, laughter, and a sense of peace into my life that I never knew I needed. Every memory we’ve made together fills my heart with happiness, and I look forward to building countless more. You are my everything. Happy Birthday, my love. 💖";
+  // Function to add random musical notes
+  function addMusicalNotes() {
+    const musicalNotesContainer = document.createElement("div");
+    musicalNotesContainer.classList.add("musical-notes-container");
+    document.body.appendChild(musicalNotesContainer);  // Append it to the body
 
-  // const loveLetterElement = document.getElementById("love-letter");
-  // loveLetterElement.textContent = letter; // Set the full love letter
+    const numNotes = 15;  // Number of notes to generate (can be adjusted)
+    const notes = ['🎵', '🎶', '❤️'];  // Array of possible notes
+    const containerWidth = window.innerWidth;  // Get the width of the screen
+    const containerHeight = window.innerHeight;  // Get the height of the screen
 
+    for (let i = 0; i < numNotes; i++) {
+      const note = document.createElement("span");
+      note.classList.add("note");
+
+      // Randomly choose the note (🎵 or 🎶)
+      note.textContent = notes[Math.floor(Math.random() * notes.length)];
+
+      // Set random position for each note
+      note.style.left = Math.random() * containerWidth + "px";  // Random x-position
+      note.style.bottom = 0;  // Start from the bottom of the screen
+
+      // Set random animation speed and delay for each note
+      const animationDuration = Math.random() * 4 + 3 + "s";  // Random speed between 3s to 7s
+      const animationDelay = Math.random() * 5 + "s";  // Random delay before starting
+
+      note.style.animationDuration = animationDuration;  // Apply the random speed
+      note.style.animationDelay = animationDelay;  // Apply the random delay
+
+      // Append the note to the container
+      musicalNotesContainer.appendChild(note);
+    }
+  }
+
+  // Love Letter Content
   const loveLetterElement = document.getElementById("love-letter");
 
-  // Updated Love letter content
   const letter = `My dearest,
 
   There are no words that can fully express the way you make me feel. Every day with you is a blessing, a reminder of how much love, joy, and light you've brought into my life. From the very first moment we met, I knew my world was about to change, but I never could have imagined how deeply you would touch my heart. With each passing day, my love for you only grows stronger, deeper, and more beautiful than I ever thought possible.
@@ -89,7 +120,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Function to show the milestone at the current index
   function showMilestone(index) {
-    console.log(`showMilestone called with index: ${index}`); // Debugging log
     milestoneSections.forEach((section, idx) => {
       if (idx === index) {
         section.classList.remove("hidden");
@@ -101,75 +131,62 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  let currentSetIndex = 0;  // Start with the first set
-  let totalSets = document.querySelectorAll('.image-set').length;  // Get the total number of sets
-  let imageSets = document.querySelectorAll('.image-set');  // Select all image sets
+  let currentSetIndex = 0;
+  let totalSets = document.querySelectorAll('.image-set').length;
+  let imageSets = document.querySelectorAll('.image-set');
 
   function showNextSet() {
-    // Hide all sets first
     imageSets.forEach(set => {
-      set.style.opacity = 0;  // Hide the set by setting opacity to 0
+      set.style.opacity = 0;
     });
 
-    // Show the next set
     currentSetIndex++;
     if (currentSetIndex >= totalSets) {
-      currentSetIndex = 0; // Loop back to the first set
+      currentSetIndex = 0;
     }
 
-    // Show the next set with fade-in effect
-    imageSets[currentSetIndex].style.opacity = 1;  // Show the current set by setting opacity to 1
+    imageSets[currentSetIndex].style.opacity = 1;
   }
 
   function startSlideshow() {
-    setInterval(showNextSet, 4000);  // Change the set every 4 seconds (you can adjust the time)
+    setInterval(showNextSet, 4000);
   }
 
-  // Initialize the slideshow
-  showNextSet();  // Show the first set immediately
-  startSlideshow();  // Start the slideshow
+  showNextSet();
+  startSlideshow();
 
   // Puzzle Button Logic (Unlock next milestone)
   document.querySelectorAll(".unlock").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const puzzle = btn.closest(".milestone").querySelector(".puzzle");  // Correctly select the .puzzle div inside .milestone
+      const puzzle = btn.closest(".milestone").querySelector(".puzzle");
 
-      // Retrieve the correct answers from data-answer attribute
       const answersAttr = puzzle.dataset.answer || "";
       const answers = answersAttr
-        .toLowerCase() // Convert the answers to lowercase
-        .split(",") // Split by commas
-        .map(a => a.trim()); // Trim any extra spaces
+        .toLowerCase()
+        .split(",")
+        .map(a => a.trim());
 
-      const userAnswerInput = puzzle.querySelector(".answer"); // Get user input
-      const userAnswer = userAnswerInput ? userAnswerInput.value.toLowerCase().trim() : ""; // Normalize user input
+      const userAnswerInput = puzzle.querySelector(".answer");
+      const userAnswer = userAnswerInput ? userAnswerInput.value.toLowerCase().trim() : "";
 
-      console.log(`User Answer: "${userAnswer}"`); // Debugging log
-      console.log(`Correct answers array: ${answers}`); // Debugging log
-
-      // Exit if no answer entered
       if (userAnswer === "") {
         const hint = puzzle.querySelector(".hint");
         if (hint) hint.classList.remove("hidden");
         return;
       }
 
-      // Check if the answer is correct
       const isCorrect = answers.some(ans => ans === userAnswer);
-
-      console.log(`Is answer correct? ${isCorrect}`); // Debugging log
 
       if (isCorrect) {
         if (typeof confetti === "function") {
           confetti({ particleCount: 80, spread: 70 });
         }
 
-        btn.disabled = true; // Disable button after correct answer
+        btn.disabled = true;
 
-        // Show the next milestone after a correct answer
         if (current + 1 < milestoneSections.length) {
-          current++;  // Increment current milestone index
-          showMilestone(current); // Show the next milestone
+          current++;
+          showMilestone(current);
         } else {
           milestones.classList.add("hidden");
           document.getElementById("main-content").classList.remove("hidden");
