@@ -11,44 +11,53 @@ document.addEventListener("DOMContentLoaded", () => {
   // Hide the "Start the journey" button initially
   nextBtn.style.display = "none";
 
-  // Start Confetti on landing page
-  const runConfetti = () => {
-    const interval = setInterval(() => {
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { x: Math.random(), y: Math.random() },
-      });
-    }, 200); // Fire every 200ms
-
-    return interval; // Return the interval ID so it can be cleared later
-  };
-
-  // Start Confetti
-  const confettiInterval = runConfetti(); // Start the confetti effect when page loads
-
-  // Countdown timer (5 seconds for testing)
-  //const targetDate = new Date(Date.now() + 5000).getTime(); // 5 seconds for testing
+  // Check if the current time is after 12:00 AM
+  const currentTime = new Date();
   const targetDate = new Date("December 31, 2025 00:00:00").getTime();
-  const timer = setInterval(() => {
-    const now = new Date().getTime();
-    const distance = targetDate - now;
+  //const targetDate = new Date("December 24, 2025 00:45:00").getTime();
+  // If the current time is after 12:00 AM, show the "Start your journey" button directly
+  if (currentTime.getHours() >= 0 && currentTime.getMinutes() === 0) {
+    countdownEl.textContent = "🎉 It’s time! 🎉";
+    nextBtn.style.display = "block";  // Show the button
+  } else {
+    // Start Confetti on landing page
+    const runConfetti = () => {
+      const interval = setInterval(() => {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { x: Math.random(), y: Math.random() },
+        });
+      }, 200); // Fire every 200ms
 
-    if (distance <= 0) {
-      clearInterval(timer);
-      clearInterval(confettiInterval); // Stop confetti when countdown reaches 0
-      countdownEl.textContent = "🎉 It’s time! 🎉";
-      nextBtn.style.display = "block";  // Show the button after countdown reaches 0
-      return;
-    }
+      return interval; // Return the interval ID so it can be cleared later
+    };
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    // Start Confetti
+    const confettiInterval = runConfetti(); // Start the confetti effect when page loads
 
-    countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-  }, 1000);
+    // Countdown timer (5 seconds for testing)
+    //const targetDate = new Date(Date.now() + 5000).getTime(); // 5 seconds for testing
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        clearInterval(timer);
+        clearInterval(confettiInterval); // Stop confetti when countdown reaches 0
+        countdownEl.textContent = "🎉 It’s time! 🎉";
+        nextBtn.style.display = "block";  // Show the button after countdown reaches 0
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }, 1000);
+  }
 
   // Show first milestone after countdown
   nextBtn.addEventListener("click", () => {
