@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
     musicalNotesContainer.classList.add("musical-notes-container");
     document.body.appendChild(musicalNotesContainer);  // Append it to the body
 
-    const numNotes = 15;  // Number of notes to generate (can be adjusted)
+    const numNotes = 7;  // Number of notes to generate (can be adjusted)
     const notes = ['❤️'];  // Array of possible notes
     const containerWidth = window.innerWidth;  // Get the width of the screen
     const containerHeight = window.innerHeight;  // Get the height of the screen
