@@ -264,3 +264,37 @@ button:hover:enabled { transform: scale(1.05); }
     transform: rotate(360deg);  /* Complete one full rotation (360 degrees) */
   }
 }
+
+
+/* Styling for the musical notes */
+.musical-notes-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Make sure it appears above other content */
+  pointer-events: none; /* Prevents the notes from interfering with user interactions */
+}
+
+.note {
+  position: absolute;
+  font-size: 2rem;  /* Size of the musical notes */
+  opacity: 0;
+  animation: floatUp 5s ease-in-out infinite;
+}
+
+/* Keyframes for the floating animation */
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-200px) rotate(180deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-400px) rotate(360deg);
+  }
+}
