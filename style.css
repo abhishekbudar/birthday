@@ -80,7 +80,6 @@ button:hover:enabled { transform: scale(1.05); }
 .images img { width: 220px; border-radius: 15px; transition: transform 0.3s; }
 .images img:hover { transform: scale(1.1); } */
 
-
 /* GALLERY */
 .gallery {
   padding: 60px 20px;
@@ -126,6 +125,30 @@ button:hover:enabled { transform: scale(1.05); }
   0% { opacity: 0; }
   50% { opacity: 1; }
   100% { opacity: 0; }
+}
+
+/* Media Queries for Mobile Responsiveness */
+
+/* For tablets and smaller devices */
+@media (max-width: 768px) {
+  .image-set img {
+    width: 150px;  /* Smaller images for tablets */
+    height: 150px;
+  }
+}
+
+/* For phones */
+@media (max-width: 480px) {
+  .image-set img {
+    width: 120px;  /* Even smaller images for phones */
+    height: 120px;
+  }
+
+  /* Adjust image sets to show 1 image per row */
+  .image-set {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 
